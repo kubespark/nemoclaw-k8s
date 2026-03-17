@@ -1,0 +1,39 @@
+name: Release Helm Chart
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-helm@v4
+        with:
+          version: v3.14.0
+
+      - name: Lint chart
+        run: helm lint .
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Package chart
+        run: helm package .
+
+      - name: Push to GHCR
+        run: |
+          PKG=$(ls nemoclaw-*.tgz)
+          helm push "$PKG" oci://ghcr.io/kubespark
+
+      - name: Upload chart to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: nemoclaw-*.tgz

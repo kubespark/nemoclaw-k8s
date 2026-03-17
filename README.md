@@ -13,8 +13,9 @@ Kubernetes Helm chart for [NVIDIA NemoClaw](https://docs.nvidia.com/nemoclaw/lat
 ## Install
 
 ```bash
-helm repo add kubespark https://kubespark.github.io/nemoclaw-k8s
-helm install nemoclaw kubespark/nemoclaw --set nemoclaw.apiKey=<your-key>
+helm install nemoclaw oci://ghcr.io/kubespark/nemoclaw \
+  -n nemoclaw --create-namespace \
+  --set nemoclaw.apiKey=<your-key>
 ```
 
 Or install from source:
