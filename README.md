@@ -7,7 +7,7 @@ Kubernetes Helm chart for [NVIDIA NemoClaw](https://docs.nvidia.com/nemoclaw/lat
 ## Prerequisites
 
 - Kubernetes 1.26+
-- Helm 3.x
+- Helm 3.x (optional — plain YAML manifests also provided)
 - An NVIDIA API key from [build.nvidia.com](https://build.nvidia.com)
 
 ## Install
@@ -24,6 +24,15 @@ Or install from source:
 git clone https://github.com/kubespark/nemoclaw-k8s.git
 cd nemoclaw-k8s
 helm install nemoclaw . -n nemoclaw --create-namespace --set nemoclaw.apiKey=<your-key>
+```
+
+### Without Helm
+
+Apply the plain YAML manifests directly:
+
+```bash
+# Edit manifests/install.yaml and replace REPLACE_ME with your NVIDIA API key
+kubectl apply -f manifests/install.yaml
 ```
 
 ## Configuration
@@ -69,7 +78,11 @@ If your cluster enforces PodSecurityStandards or OPA/Gatekeeper policies, you wi
 ## Uninstall
 
 ```bash
+# Helm
 helm uninstall nemoclaw -n nemoclaw
+
+# Plain manifests
+kubectl delete -f manifests/install.yaml
 ```
 
 ## License
