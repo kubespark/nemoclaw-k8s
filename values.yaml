@@ -1,0 +1,73 @@
+# NemoClaw Helm Chart - Default Values
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/nvidia/openshell-community/sandboxes/openclaw
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+nemoclaw:
+  # NVIDIA API key for cloud inference via build.nvidia.com
+  # Set via --set nemoclaw.apiKey=<key> or use existingSecret
+  apiKey: ""
+  # Use an existing secret for the API key instead of creating one
+  # The secret must contain a key named NVIDIA_API_KEY
+  existingSecret: ""
+  # Inference provider
+  inferenceProvider: nvidia-nim
+  # Model to use for inference
+  # Options: nemotron-3-super-120b, nemotron-ultra-253b, nemotron-super-49b-v1.5, nemotron-3-nano-30b
+  model: nemotron-3-super-120b
+  # Blueprint configuration overrides
+  blueprint: {}
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 5Gi
+  # Use an existing PVC
+  existingClaim: ""
+
+# OpenShell sandbox requires elevated privileges to run containers within containers.
+# This is a known limitation — see README for security considerations.
+securityContext:
+  privileged: true
+
+podSecurityContext: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Network policy to restrict egress
+networkPolicy:
+  enabled: true
+  # Allowed egress destinations for inference API
+  egressCIDRs:
+    - 0.0.0.0/0
+  # DNS egress is always allowed

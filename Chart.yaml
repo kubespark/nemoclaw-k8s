@@ -1,0 +1,19 @@
+apiVersion: v2
+name: nemoclaw
+description: Kubernetes Helm chart for NVIDIA NemoClaw — deploy OpenClaw with enterprise sandboxing on k8s
+type: application
+version: 0.1.0
+appVersion: "alpha"
+home: https://github.com/kubespark/nemoclaw-k8s
+sources:
+  - https://github.com/NVIDIA/NemoClaw
+  - https://docs.nvidia.com/nemoclaw/latest/index.html
+keywords:
+  - nemoclaw
+  - nvidia
+  - openclaw
+  - ai-agents
+  - sandboxing
+maintainers:
+  - name: KubeSpark
+    url: https://github.com/kubespark

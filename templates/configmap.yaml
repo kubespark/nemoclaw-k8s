@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nemoclaw.fullname" . }}
+  labels:
+    {{- include "nemoclaw.labels" . | nindent 4 }}
+data:
+  NEMOCLAW_INFERENCE_PROVIDER: {{ .Values.nemoclaw.inferenceProvider | quote }}
+  NEMOCLAW_MODEL: {{ .Values.nemoclaw.model | quote }}
+  {{- range $key, $value := .Values.nemoclaw.blueprint }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
