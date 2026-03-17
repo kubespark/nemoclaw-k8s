@@ -2,7 +2,7 @@
 
 Kubernetes Helm chart for [NVIDIA NemoClaw](https://docs.nvidia.com/nemoclaw/latest/index.html) — deploy OpenClaw with enterprise sandboxing on k8s.
 
-> **Warning:** NemoClaw is alpha software (released March 2026 at GTC). This chart is a community project and is not officially supported by NVIDIA.
+> **Note:** NemoClaw is alpha software (released March 2026 at GTC). This is a **community-maintained** chart and is not officially supported by NVIDIA. If NVIDIA releases an official Helm chart, we will link to it here.
 
 ## Prerequisites
 
